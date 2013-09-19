@@ -4,7 +4,7 @@
   <title><![CDATA[basecss的笔记]]></title>
   <link href="http://basecss.github.io/atom.xml" rel="self"/>
   <link href="http://basecss.github.io/"/>
-  <updated>2013-09-19T19:36:27+08:00</updated>
+  <updated>2013-09-19T19:48:50+08:00</updated>
   <id>http://basecss.github.io/</id>
   <author>
     <name><![CDATA[basecss]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Use Octopress and Github]]></title>
+    <title type="html"><![CDATA[使用Octopress在Github搭建博客]]></title>
     <link href="http://basecss.github.io/blog/2013/09/19/use-octopress-and-github/"/>
     <updated>2013-09-19T19:03:00+08:00</updated>
     <id>http://basecss.github.io/blog/2013/09/19/use-octopress-and-github</id>
