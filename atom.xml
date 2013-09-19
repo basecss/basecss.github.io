@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[basecss的笔记]]></title>
+  <link href="http://basecss.github.io/atom.xml" rel="self"/>
+  <link href="http://basecss.github.io/"/>
+  <updated>2013-09-19T19:11:24+08:00</updated>
+  <id>http://basecss.github.io/</id>
+  <author>
+    <name><![CDATA[basecss]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Use Octopress and Github]]></title>
+    <link href="http://basecss.github.io/blog/2013/09/19/use-octopress-and-github/"/>
+    <updated>2013-09-19T19:03:00+08:00</updated>
+    <id>http://basecss.github.io/blog/2013/09/19/use-octopress-and-github</id>
+    <content type="html"><![CDATA[<p>Octopress折腾笔记</p>
+]]></content>
+  </entry>
+  
+</feed>
