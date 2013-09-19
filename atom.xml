@@ -4,7 +4,7 @@
   <title><![CDATA[basecss的笔记]]></title>
   <link href="http://basecss.github.io/atom.xml" rel="self"/>
   <link href="http://basecss.github.io/"/>
-  <updated>2013-09-19T19:11:24+08:00</updated>
+  <updated>2013-09-19T19:36:27+08:00</updated>
   <id>http://basecss.github.io/</id>
   <author>
     <name><![CDATA[basecss]]></name>
@@ -18,7 +18,70 @@
     <link href="http://basecss.github.io/blog/2013/09/19/use-octopress-and-github/"/>
     <updated>2013-09-19T19:03:00+08:00</updated>
     <id>http://basecss.github.io/blog/2013/09/19/use-octopress-and-github</id>
-    <content type="html"><![CDATA[<p>Octopress折腾笔记</p>
+    <content type="html"><![CDATA[<p>Octopress折腾笔记。</p>
+
+<h2>安装ruby依赖</h2>
+
+<p>Mac下ruby的默认版本是1.8.7，新版的Octopress需要1.9.3及以上版本的ruby支持，先升级下ruby版本。</p>
+
+<p>各种搜索的结果之下，最终决定使用rvm(ruby多版本控制器)来升级ruby。由于之前已经通过XCode安装了Command line tools，下面直接先安装好rvm：</p>
+
+<pre><code>curl -L get.rvm.io | bash -s stable
+
+rvm install ruby 1.9.3
+</code></pre>
+
+<h2>安装Octopress</h2>
+
+<p>直接将Octopress程序clone到本地安装即可。</p>
+
+<pre><code>git clone https://github.com/imathis/octopress.git dist
+</code></pre>
+
+<p>注意这里的dist可以自行的指定目录名。比如我在本地指定的是basecss[在我的Documents的Github目录中]。</p>
+
+<p>接下来安装相关依赖：</p>
+
+<pre><code>gem install bundler
+
+bundle install
+</code></pre>
+
+<p>最后在本地安装Octopress：</p>
+
+<pre><code>rake install
+</code></pre>
+
+<h2>配置Octopress</h2>
+
+<p>clone到本地的文件中有一个_config.yml文件，修改其中的相关配置即可。</p>
+
+<h2>新增博客文章</h2>
+
+<pre><code>rake new_post['fileName']
+</code></pre>
+
+<p>这回在本地的source/_post中生成响应的markdown文件，使用markdown写好文章即可。</p>
+
+<h2>发布博客</h2>
+
+<p>可以使用下面的命令在本地预览一下：</p>
+
+<pre><code>rake preview
+</code></pre>
+
+<p>托管到github</p>
+
+<pre><code>rake setup_github_pages
+</code></pre>
+
+<p>根据提示配置好即可。(注意国内最好用http协议的git url)</p>
+
+<pre><code>rake generate
+rake deploy
+</code></pre>
+
+<p>完成发布</p>
 ]]></content>
   </entry>
   
