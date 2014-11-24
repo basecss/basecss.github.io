@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://basecss.github.io/sitemap.xml 
