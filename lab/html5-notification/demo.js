@@ -1,7 +1,7 @@
 (function() {
 
 	var demo = document.querySelector('#demo'),
-		notification;
+		notification
 
 	demo.addEventListener('click', function() {
 
