@@ -1,6 +1,6 @@
 ## 2014-12-17
 
-项目切换到`angular`之后有个富文本编辑需求，引入了`ckeditor`。遵循最佳实践的方式，在指令内用第三方插件，借助`$apply`来做只绑定。可以简单的通过封装了一个指令来使用`ckeitor`。
+项目切换到`angular`之后有个富文本编辑需求，引入了`ckeditor`。遵循最佳实践的方式，在指令内用第三方插件，借助`$apply`来做绑定。可以简单的通过封装了一个指令来使用`ckeitor`。
 
 ```html
 <textarea ng-model="form.content" name="articleContent" my-ckeditor></textarea>
