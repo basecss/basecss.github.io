@@ -46,3 +46,6 @@ app.directive('myCkeditor', function() {
 	}
 })
 ```
+
+> @update: 2014-12-18
+> 这个指令似乎不能实时同步编辑器数据到 `scope` 中。待考究。
