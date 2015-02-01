@@ -72,7 +72,7 @@
 </style>
 </head>
 <body>
-<input type="text" id="config" value="60" />
+<input type="text" id="config" value="11" />
 <div id="countdown"></div>
 <script type="text/javascript">
 ;(function() {
@@ -143,17 +143,14 @@
 		}
 
 		var start = config.value ? parseInt(config.value, 10) : 60
+
+		countdown.className = ''
 		
 		startCountdown(start, 1000, {
 			warn: warn,
 			over: over
 		})
 
-	}, false)
-
-	config.addEventListener('input', function() {
-		console.log('change')
-		countdown.innerHTML = config.value
 	}, false)
 
 })()
