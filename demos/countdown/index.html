@@ -16,6 +16,7 @@
 	width: 500px;
 	height: 480px;
 	line-height: 480px;
+	background-color: rgba(0,0,0,0.03);
 	font-family: consolas, arial, sans-serif;
 	font-size: 180px;
 	font-weight: 300;
@@ -138,7 +139,7 @@
 	document.addEventListener('click', function(event) {
 
 		if(event.target.id) {
-
+			return
 		}
 
 		var start = config.value ? parseInt(config.value, 10) : 60
