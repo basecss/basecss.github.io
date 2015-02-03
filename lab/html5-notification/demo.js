@@ -13,7 +13,7 @@
 		Notification.requestPermission(function(permission) {
 
 			if(permission !== 'granted') {
-				return;
+				return
 			}
 
 			notification = new Notification('Notification Title', {
