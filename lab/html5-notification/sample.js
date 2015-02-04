@@ -1,4 +1,4 @@
-(function() {
+;(function() {
 
 	var sample = document.querySelector('#sample')
 

@@ -1,4 +1,4 @@
-(function() {
+;(function() {
 
 	var demo = document.querySelector('#demo'),
 		notification
@@ -31,7 +31,5 @@
 		})
 
 	}, false)
-
-
 
 })()

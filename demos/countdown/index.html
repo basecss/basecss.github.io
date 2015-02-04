@@ -72,8 +72,7 @@
 </style>
 </head>
 <body>
-<input type="text" id="config" value="60" />
-<div id="countdown"></div>
+<div id="countdown">60</div>
 <script type="text/javascript">
 ;(function() {
 
@@ -91,10 +90,6 @@
 	// timer = setInterval(Countdown, 1000)
 
 	var countdown = document.getElementById('countdown')
-	var config = document.getElementById('config')
-
-	// export
-	window.configDOM = config
 
 	function startCountdown(max, delay, callbacks) {
 		var pause = delay
@@ -134,18 +129,14 @@
 		countdown.className = 'over'
 	}
 
-	countdown.innerHTML = config.value ? parseInt(config.value, 10) : 60
-
 	document.addEventListener('click', function(event) {
 
 		if(event.target.id) {
 			return
 		}
 
-		var start = config.value ? parseInt(config.value, 10) : 60
+		var start = 60
 
-		countdown.className = ''
-		
 		startCountdown(start, 1000, {
 			warn: warn,
 			over: over
