@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>basecss.net</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.basecss.net/"/>
+  <updated>2016-04-01T21:21:23.000Z</updated>
+  <id>http://www.basecss.net/</id>
+  
+  <author>
+    <name>basecss</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JavaScript 位运算学习</title>
+    <link href="http://www.basecss.net/2014/03/27/code-learning/"/>
+    <id>http://www.basecss.net/2014/03/27/code-learning/</id>
+    <published>2014-03-27T01:23:31.000Z</published>
+    <updated>2016-04-01T21:21:23.000Z</updated>
+    
+    <content type="html">&lt;p&gt;这几天粗略的阅读了一下 &lt;a href=&quot;http://angularjs.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;AngularJS&lt;/a&gt; 的源码，在这个过程中发现有这么两段代码挺有意思的：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; manualLowercase = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;s&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; isString(s) ? s.replace(&lt;span class=&quot;regexp&quot;&gt;/[A-Z]/g&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;ch&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;String&lt;/span&gt;.fromCharCode(ch.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) | &lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;) : s&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; manualUppercase = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;s&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; isString(s) ? s.replace(&lt;span class=&quot;regexp&quot;&gt;/[a-z]/g&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;ch&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;String&lt;/span&gt;.fromCharCode(ch.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &amp;amp; ~&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;) : s&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这两段代码用来处理字母大小写转换，由于某些国家（土耳其）使用 &lt;code&gt;toLowerCase()&lt;/code&gt; 和 &lt;code&gt;toUpperCase()&lt;/code&gt; 不能正确的转换字母大小写，因而需要手动的处理。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;为什么说这两段代码有意思？其实是觉得其中用&lt;strong&gt;位运算&lt;/strong&gt;处理字母大小写的代码很巧妙，其核心代码如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ch.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) | &lt;span class=&quot;number&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;// 大写转小写&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ch.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &amp;amp; ~&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;// 小写转大写&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在分析两段代码之前，先来回顾一下 JavaScript 中的两个概念：&lt;strong&gt;整数&lt;/strong&gt;和&lt;strong&gt;位运算&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;从严格意义上讲，ECMAScript 中有两种类型的整数：有符号的整数（正数和负数）和无符号的整数（只有正数）。而默认情况下 JavaScript 中的整数都是有符号的。&lt;/p&gt;
+&lt;p&gt;而在不考虑 ECMAScript 中数字格式存储与转换（为 32 位）的情况下，实际上我们操作的都是 32 位的整数。而对于上面提到的有符号整数而言，其中前 31 位（&lt;code&gt;end&amp;lt;-start&lt;/code&gt;）表示数字的值，最后1位表示符号位（&lt;code&gt;0&lt;/code&gt; 表示正，&lt;code&gt;1&lt;/code&gt; 表示负）。&lt;/p&gt;
+&lt;p&gt;这里提到的 32 位的整数在计算机底层都是使用二进制格式存储的，而这个二进制由 &lt;code&gt;0&lt;/code&gt; 和 &lt;code&gt;1&lt;/code&gt; 组成，其中每一位都有对应的十进制数字结果，整个二进制数值代表的十进制结果由所有这些位对应的十进制数字之和。&lt;/p&gt;
+&lt;p&gt;这篇文章中不考虑负数的情况，一个 32 位二进制格式的数字看起来如下所示，这里以 10 为例：&lt;/p&gt;
+&lt;figure class=&quot;highlight basic&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;symbol&quot;&gt;0 &lt;/span&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;二进制数字计算的方式：&lt;code&gt;number ( Math.pow(2, index))&lt;/code&gt;，这里的 &lt;code&gt;number&lt;/code&gt; 表示二进制中对应位上的数值 0/1，&lt;code&gt;index&lt;/code&gt; 表示该数值在整个二进制格式的数字中的索引。注意一个二进制格式的起始点在右侧。&lt;/p&gt;
+&lt;p&gt;那么上面的数字就等于：&lt;code&gt;1 * Math.pow(2,3) + 1 * Math.pow(2, 1) = 10&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;前面提到了，这些二进制的数字实际上都是在计算机的底层完成的，而 ECMAScript 中刚好提供了二进制运算相关的操作符，这些操作符都是直接对运算数进行二进制操作的，并且都是发生在幕后的。&lt;/p&gt;
+&lt;p&gt;JavaScript 中有 7 个位运算相关的运算符：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;按位非(NOT)&lt;/strong&gt; - 用一个波浪线” &lt;code&gt;~&lt;/code&gt; “表示，对二进制的每一位进行取反操作，即将 &lt;code&gt;0&lt;/code&gt; 变成 &lt;code&gt;1&lt;/code&gt;，将 &lt;code&gt;1&lt;/code&gt; 变成 &lt;code&gt;0&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;按位与(AND)&lt;/strong&gt; - 用一个和好” &lt;code&gt;&amp;amp;&lt;/code&gt; “表示，必须有两个操作数，先对齐二进制位，然后把对应位都为 &lt;code&gt;1&lt;/code&gt; 的为筛下来，其他的都为 &lt;code&gt;0&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;按位或(OR)&lt;/strong&gt; - 用一个竖线” &lt;code&gt;|&lt;/code&gt; “表示，也必须有两个操作数，对齐位之后只要对应位有 1 就筛下来，只有同时位 0 时才返回 &lt;code&gt;0&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;按位异或(XOR)&lt;/strong&gt; - 用一个插入符号” &lt;code&gt;^&lt;/code&gt; “表示，也必须有两个操作数，对齐位之后不同的返回 1，相同的返回 0。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;左移&lt;/strong&gt; - 用两个小于号” &lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt;表示，顾名思议，将操作数左移指定位数，右侧空位用 0 补齐。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有符号右移&lt;/strong&gt; - 用两个大于号” &lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt; “表示，保留符号位，剩下的右移指定位。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;无符号右移&lt;/strong&gt; - 用三个大于号” &lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt; “表示，往右侧移动指定位数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上这些位运算符，最终操作的都是二进制数值。&lt;/p&gt;
+&lt;p&gt;在上面的代码中分别涉及到了&lt;strong&gt;按位非&lt;/strong&gt;，&lt;strong&gt;按位与&lt;/strong&gt;，&lt;strong&gt;按位或&lt;/strong&gt;三种运算。先来针对上面的两段代码讲解一下这三个位运算符：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ch.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) | &lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这段代码通过正则表达式匹配到给定字符串中的每个大写字母: &lt;code&gt;A-Z&lt;/code&gt;；接下来使用字符串对象的 &lt;code&gt;charCodeAt()&lt;/code&gt; 方法拿到该字符对应的 Unicode 编码，恰好这个编码是一个数字；最后使用&lt;strong&gt;按位或&lt;/strong&gt;运算获取到另外一个数字。&lt;/p&gt;
+&lt;p&gt;为什么这里执行对数值 32 的&lt;strong&gt;按位或&lt;/strong&gt;运算呢？当然这肯定不是空穴来风。那么我们先从大写字母及对应的 Unicode 值分析看看。不难发现，&lt;code&gt;A-Z&lt;/code&gt; 对应的 Unicode 编码分别为 &lt;code&gt;65-90&lt;/code&gt;；而这写编码对应的二进制表示分别为：&lt;code&gt;1000001&lt;/code&gt; … &lt;code&gt;1011010&lt;/code&gt;。再看看小些字母对应的数据：其 Unicode 编码分别为：&lt;code&gt;97-122&lt;/code&gt;，对应的二进制表示分别为：&lt;code&gt;1100001&lt;/code&gt;…&lt;code&gt;1111010&lt;/code&gt;。最后将它们放入一张表格中对比如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;提示：使用 &lt;code&gt;(1).toString(2)&lt;/code&gt; 便可以拿到每个数字对应的二进表示法的有效位。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;大写字母二进制有效位&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;&lt;code&gt;1000001&lt;/code&gt;&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;…&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;&lt;code&gt;1011010&lt;/code&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;小写字母二进制有效位&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;1100001&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;…&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;1111010&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;在这个表格中没有完整列出每个字母对应的二进制有效位。但是通过完整的对比不难发现，大写字母与小写字母的二进制有效位都是 7 位，对这些数值进行对不不难发现大小写字母的二进制有效位中：大写字母的第 6 位为 0；而小写字母的第 6 位为 1；而每个大小写自己的二进制有效位中刚好只有这一位不同。&lt;/p&gt;
+&lt;p&gt;因此我们在求值大写字母的对应的小写字母的二进制数值时转换大写字母的二进制数值第 6 位即可，其他的位是一样的不用转换。而第 6 位为 1 时，其对应的十进制数值刚好是 32（&lt;code&gt;1 * Math.pow(2, 5)&lt;/code&gt;），32 对应的二进制数值的有效位为：&lt;code&gt;100000&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;那么如何转换这里的第 6 位呢？我们的目的是将大写字母二进制数值第 6 位的 0 转换为 1，而其他的位不变。最终我们只需要拿一个刚好第 6 位为 1，其他位为 0 的二进制数值与大写字母的二进制数值进行位运算操作即可，这个能够用来进行有效位运算的二进制数值则为 &lt;code&gt;100000&lt;/code&gt;，而 JavaScript 中的&lt;strong&gt;按位或&lt;/strong&gt;操作刚好能有做到这一点。&lt;/p&gt;
+&lt;p&gt;而在 JavaScript 中，我们并不能直接操作一个二进制的数值，二进制的运算都是在低层完成的，在 JavaScript 中这些都是按位运算符的使命。那么，在前面使用 &lt;code&gt;charCodeAt()&lt;/code&gt; 方法已经拿到了大写字母对应的 Unicode 编码-即一个有效的十进制数字；而 &lt;code&gt;100000&lt;/code&gt; 对应的十进制数字为 32。&lt;/p&gt;
+&lt;p&gt;由此得出结论，使用大写字母对应的 Unicode 编码与 32 作按位或运算便能正确的拿到其对应的小写字母的 Unicode 编码，其操作过程如下：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以大写字母 &lt;code&gt;A&lt;/code&gt; 为例&lt;/strong&gt;：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;1&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;1&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;如此，便拿到了一个二进制数值：&lt;code&gt;1100001&lt;/code&gt;，对应的十进制数字为 97（parseInt(‘1100001’, 2)）。最后使用 String 对象的 &lt;code&gt;fromCharCode()&lt;/code&gt; 方法得到的字符便是大写字母 &lt;code&gt;A&lt;/code&gt; 对应的小写字母 &lt;code&gt;a&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;整个转换的过程中，所有的这些操作实际上都是在底层(?内存中)完成的。&lt;/p&gt;
+&lt;p&gt;上面剖析了大写字母转小写字母的过程。接下来再看看小写字母转大写字母。在上面的代码中，我们可以看到转大写字母的代码为：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ch.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &amp;amp; ~&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;首先，同大写字母一样，使用字符串对象 (String) 的 &lt;code&gt;charCodeAt()&lt;/code&gt; 方法拿到对应的 Unicode 编码(也是一个十进制数值)。在上面的字母二进制数值对比表格中我们已经找到了规律：即转换每个字母对应的二进制数值的第 6 位即可。那么如何将小写字母的二进制数值的第 6 位 1 转换为 0，而其位不变呢？&lt;/p&gt;
+&lt;p&gt;前面将大写字母的第 6 位 0 转为 1，我们使用了&lt;strong&gt;按位或&lt;/strong&gt;来保证将第 6 位正确的转换为 1。而这一次小写转大写的过程中，我们必须保证正确的将第 6 位 1 转换为 0，其他位不变即可。由此得出，这一次进行位运算的基本条件必须保证第二个操作数的第 6 位为 0，而其他位该是 1 的是 1，该是 0 的是 0。&lt;/p&gt;
+&lt;p&gt;那么如何做到这一点呢？根据位运算的特点以及上面的分析，我们保证第 6 位不同即可，那么拿 &lt;code&gt;011111&lt;/code&gt; 与小写字母的二进制数值进行&lt;strong&gt;按位与&lt;/strong&gt;运算运算即可。而对 32 进行&lt;strong&gt;按位非&lt;/strong&gt;运算的结果刚好为 &lt;code&gt;011111&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以小写字母 &lt;code&gt;a&lt;/code&gt; 为例&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;1&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;1&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;0&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;1&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里不一定必须是 &lt;code&gt;011111&lt;/code&gt;。比如拿一个完整的 32 位 &lt;code&gt;11111111111111111111111111011111&lt;/code&gt; 也可以。但是在上述环境中，&lt;code&gt;011111&lt;/code&gt; 就能满足需求，而这个二进制数值对应的数值刚好是对 32 进行&lt;strong&gt;按位非&lt;/strong&gt;的运算结果。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;根据前面的分析，这样就拿到了大写字母 A 对应的二进制数值，再对它编码便可以返回最终的大写字母。&lt;/p&gt;
+&lt;p&gt;至此，对 AngularJS 中这两段代码的分析就完成了。也算是对 JavaScript 中的位运算做了一次巩固，温习。&lt;/p&gt;
+&lt;p&gt;其实 JavaScript 中的位运算远远不止这一点，我们还可以使用其他位运算符做到很多事情。下面是一些例子，不妨分析一下其运算原理：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 获取 0-max 之间随机整数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;random&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;max&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random() * max | &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 获取 1-max 之间的随机整数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// return Math.random() * max | 1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 奇偶判断&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;isOdd&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;number&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; (&lt;span class=&quot;built_in&quot;&gt;parseInt&lt;/span&gt;(number) &amp;amp; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) === &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;isEven&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;number&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; (&lt;span class=&quot;built_in&quot;&gt;parseInt&lt;/span&gt;(number) &amp;amp; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) === &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 取整&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;int&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;number&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; number | &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 取半&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;number &amp;gt;&amp;gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 2x&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;number &amp;lt;&amp;lt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 随机颜色&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;&#39;#&#39;&lt;/span&gt;+ (&lt;span class=&quot;string&quot;&gt;&#39;000000&#39;&lt;/span&gt; + (&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random()*&lt;span class=&quot;number&quot;&gt;0xFFFFFF&lt;/span&gt;&amp;lt;&amp;lt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;).toString(&lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;)).slice(&lt;span class=&quot;number&quot;&gt;-6&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 还可以挖掘更多的技巧....&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;一些本文中用到的代码片段：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 获取字符 Unicode 编码值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;str.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 获取字符二进制数值有效位&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;str.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;).toString(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 解析二进制数值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;parseInt&lt;/span&gt;(binaryNumber, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 解析 Unicode 数值位对应的字符&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;String&lt;/span&gt;.fromCharCode(unicodeNumber);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;写在最后，虽然代码很小，但是其中学问还是蛮大的，仔细分析一下感觉收获很多。在这里尤其感谢我的导师 &lt;a href=&quot;http://www.toobug.net&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@toobug&lt;/a&gt; 不厌其烦的在 KFC 给我讲解了很多基础知识。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.w3school.com.cn/js/pro_js_operators_bitwise.asp&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ECMAScript 位运算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ituring.com.cn/book/946&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JavaScript 高级程序设计(第三版) 3.5.2 位操作符&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MDN - 位运算符&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这几天粗略的阅读了一下 &lt;a href=&quot;http://angularjs.org/&quot;&gt;AngularJS&lt;/a&gt; 的源码，在这个过程中发现有这么两段代码挺有意思的：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; manualLowercase = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;s&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; isString(s) ? s.replace(&lt;span class=&quot;regexp&quot;&gt;/[A-Z]/g&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;ch&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;String&lt;/span&gt;.fromCharCode(ch.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) | &lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;) : s&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; manualUppercase = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;s&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; isString(s) ? s.replace(&lt;span class=&quot;regexp&quot;&gt;/[a-z]/g&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;ch&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;String&lt;/span&gt;.fromCharCode(ch.charCodeAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &amp;amp; ~&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;) : s&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这两段代码用来处理字母大小写转换，由于某些国家（土耳其）使用 &lt;code&gt;toLowerCase()&lt;/code&gt; 和 &lt;code&gt;toUpperCase()&lt;/code&gt; 不能正确的转换字母大小写，因而需要手动的处理。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,152 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> JavaScript 位运算学习 · basecss.net</title><meta name="description" content="JavaScript 位运算学习 - basecss"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/logo.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="https://github.com/basecss" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">订阅</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">关于</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">JavaScript 位运算学习</h1><div class="post-time">Mar 27, 2014</div><div class="post-content"><p>这几天粗略的阅读了一下 <a href="http://angularjs.org/" target="_blank" rel="external">AngularJS</a> 的源码，在这个过程中发现有这么两段代码挺有意思的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> manualLowercase = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> isString(s) ? s.replace(<span class="regexp">/[A-Z]/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ch</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">String</span>.fromCharCode(ch.charCodeAt(<span class="number">0</span>) | <span class="number">32</span>)</span><br><span class="line">    &#125;) : s</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> manualUppercase = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> isString(s) ? s.replace(<span class="regexp">/[a-z]/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ch</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">String</span>.fromCharCode(ch.charCodeAt(<span class="number">0</span>) &amp; ~<span class="number">32</span>)</span><br><span class="line">    &#125;) : s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这两段代码用来处理字母大小写转换，由于某些国家（土耳其）使用 <code>toLowerCase()</code> 和 <code>toUpperCase()</code> 不能正确的转换字母大小写，因而需要手动的处理。</p>
+</blockquote>
+<a id="more"></a>
+<p>为什么说这两段代码有意思？其实是觉得其中用<strong>位运算</strong>处理字母大小写的代码很巧妙，其核心代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ch.charCodeAt(<span class="number">0</span>) | <span class="number">32</span> <span class="comment">// 大写转小写</span></span><br><span class="line">ch.charCodeAt(<span class="number">0</span>) &amp; ~<span class="number">32</span>  <span class="comment">// 小写转大写</span></span><br></pre></td></tr></table></figure>
+<p>在分析两段代码之前，先来回顾一下 JavaScript 中的两个概念：<strong>整数</strong>和<strong>位运算</strong>。</p>
+<p>从严格意义上讲，ECMAScript 中有两种类型的整数：有符号的整数（正数和负数）和无符号的整数（只有正数）。而默认情况下 JavaScript 中的整数都是有符号的。</p>
+<p>而在不考虑 ECMAScript 中数字格式存储与转换（为 32 位）的情况下，实际上我们操作的都是 32 位的整数。而对于上面提到的有符号整数而言，其中前 31 位（<code>end&lt;-start</code>）表示数字的值，最后1位表示符号位（<code>0</code> 表示正，<code>1</code> 表示负）。</p>
+<p>这里提到的 32 位的整数在计算机底层都是使用二进制格式存储的，而这个二进制由 <code>0</code> 和 <code>1</code> 组成，其中每一位都有对应的十进制数字结果，整个二进制数值代表的十进制结果由所有这些位对应的十进制数字之和。</p>
+<p>这篇文章中不考虑负数的情况，一个 32 位二进制格式的数字看起来如下所示，这里以 10 为例：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>二进制数字计算的方式：<code>number ( Math.pow(2, index))</code>，这里的 <code>number</code> 表示二进制中对应位上的数值 0/1，<code>index</code> 表示该数值在整个二进制格式的数字中的索引。注意一个二进制格式的起始点在右侧。</p>
+<p>那么上面的数字就等于：<code>1 * Math.pow(2,3) + 1 * Math.pow(2, 1) = 10</code>。</p>
+</blockquote>
+<p>前面提到了，这些二进制的数字实际上都是在计算机的底层完成的，而 ECMAScript 中刚好提供了二进制运算相关的操作符，这些操作符都是直接对运算数进行二进制操作的，并且都是发生在幕后的。</p>
+<p>JavaScript 中有 7 个位运算相关的运算符：</p>
+<ul>
+<li><strong>按位非(NOT)</strong> - 用一个波浪线” <code>~</code> “表示，对二进制的每一位进行取反操作，即将 <code>0</code> 变成 <code>1</code>，将 <code>1</code> 变成 <code>0</code>。</li>
+<li><strong>按位与(AND)</strong> - 用一个和好” <code>&amp;</code> “表示，必须有两个操作数，先对齐二进制位，然后把对应位都为 <code>1</code> 的为筛下来，其他的都为 <code>0</code>。</li>
+<li><strong>按位或(OR)</strong> - 用一个竖线” <code>|</code> “表示，也必须有两个操作数，对齐位之后只要对应位有 1 就筛下来，只有同时位 0 时才返回 <code>0</code>。</li>
+<li><strong>按位异或(XOR)</strong> - 用一个插入符号” <code>^</code> “表示，也必须有两个操作数，对齐位之后不同的返回 1，相同的返回 0。</li>
+<li><strong>左移</strong> - 用两个小于号” <code>&lt;&lt;</code>表示，顾名思议，将操作数左移指定位数，右侧空位用 0 补齐。</li>
+<li><strong>有符号右移</strong> - 用两个大于号” <code>&gt;&gt;</code> “表示，保留符号位，剩下的右移指定位。</li>
+<li><strong>无符号右移</strong> - 用三个大于号” <code>&gt;&gt;&gt;</code> “表示，往右侧移动指定位数。</li>
+</ul>
+<p>以上这些位运算符，最终操作的都是二进制数值。</p>
+<p>在上面的代码中分别涉及到了<strong>按位非</strong>，<strong>按位与</strong>，<strong>按位或</strong>三种运算。先来针对上面的两段代码讲解一下这三个位运算符：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ch.charCodeAt(<span class="number">0</span>) | <span class="number">32</span></span><br></pre></td></tr></table></figure>
+<p>这段代码通过正则表达式匹配到给定字符串中的每个大写字母: <code>A-Z</code>；接下来使用字符串对象的 <code>charCodeAt()</code> 方法拿到该字符对应的 Unicode 编码，恰好这个编码是一个数字；最后使用<strong>按位或</strong>运算获取到另外一个数字。</p>
+<p>为什么这里执行对数值 32 的<strong>按位或</strong>运算呢？当然这肯定不是空穴来风。那么我们先从大写字母及对应的 Unicode 值分析看看。不难发现，<code>A-Z</code> 对应的 Unicode 编码分别为 <code>65-90</code>；而这写编码对应的二进制表示分别为：<code>1000001</code> … <code>1011010</code>。再看看小些字母对应的数据：其 Unicode 编码分别为：<code>97-122</code>，对应的二进制表示分别为：<code>1100001</code>…<code>1111010</code>。最后将它们放入一张表格中对比如下：</p>
+<blockquote>
+<p>提示：使用 <code>(1).toString(2)</code> 便可以拿到每个数字对应的二进表示法的有效位。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">大写字母二进制有效位</th>
+<th style="text-align:center"><code>1000001</code></th>
+<th style="text-align:center">…</th>
+<th style="text-align:center"><code>1011010</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">小写字母二进制有效位</td>
+<td style="text-align:center"><code>1100001</code></td>
+<td style="text-align:center">…</td>
+<td style="text-align:center"><code>1111010</code></td>
+</tr>
+</tbody>
+</table>
+<p>在这个表格中没有完整列出每个字母对应的二进制有效位。但是通过完整的对比不难发现，大写字母与小写字母的二进制有效位都是 7 位，对这些数值进行对不不难发现大小写字母的二进制有效位中：大写字母的第 6 位为 0；而小写字母的第 6 位为 1；而每个大小写自己的二进制有效位中刚好只有这一位不同。</p>
+<p>因此我们在求值大写字母的对应的小写字母的二进制数值时转换大写字母的二进制数值第 6 位即可，其他的位是一样的不用转换。而第 6 位为 1 时，其对应的十进制数值刚好是 32（<code>1 * Math.pow(2, 5)</code>），32 对应的二进制数值的有效位为：<code>100000</code>。</p>
+<p>那么如何转换这里的第 6 位呢？我们的目的是将大写字母二进制数值第 6 位的 0 转换为 1，而其他的位不变。最终我们只需要拿一个刚好第 6 位为 1，其他位为 0 的二进制数值与大写字母的二进制数值进行位运算操作即可，这个能够用来进行有效位运算的二进制数值则为 <code>100000</code>，而 JavaScript 中的<strong>按位或</strong>操作刚好能有做到这一点。</p>
+<p>而在 JavaScript 中，我们并不能直接操作一个二进制的数值，二进制的运算都是在低层完成的，在 JavaScript 中这些都是按位运算符的使命。那么，在前面使用 <code>charCodeAt()</code> 方法已经拿到了大写字母对应的 Unicode 编码-即一个有效的十进制数字；而 <code>100000</code> 对应的十进制数字为 32。</p>
+<p>由此得出结论，使用大写字母对应的 Unicode 编码与 32 作按位或运算便能正确的拿到其对应的小写字母的 Unicode 编码，其操作过程如下：</p>
+<p><strong>以大写字母 <code>A</code> 为例</strong>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">1</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>如此，便拿到了一个二进制数值：<code>1100001</code>，对应的十进制数字为 97（parseInt(‘1100001’, 2)）。最后使用 String 对象的 <code>fromCharCode()</code> 方法得到的字符便是大写字母 <code>A</code> 对应的小写字母 <code>a</code>。</p>
+<p>整个转换的过程中，所有的这些操作实际上都是在底层(?内存中)完成的。</p>
+<p>上面剖析了大写字母转小写字母的过程。接下来再看看小写字母转大写字母。在上面的代码中，我们可以看到转大写字母的代码为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ch.charCodeAt(<span class="number">0</span>) &amp; ~<span class="number">32</span></span><br></pre></td></tr></table></figure>
+<p>首先，同大写字母一样，使用字符串对象 (String) 的 <code>charCodeAt()</code> 方法拿到对应的 Unicode 编码(也是一个十进制数值)。在上面的字母二进制数值对比表格中我们已经找到了规律：即转换每个字母对应的二进制数值的第 6 位即可。那么如何将小写字母的二进制数值的第 6 位 1 转换为 0，而其位不变呢？</p>
+<p>前面将大写字母的第 6 位 0 转为 1，我们使用了<strong>按位或</strong>来保证将第 6 位正确的转换为 1。而这一次小写转大写的过程中，我们必须保证正确的将第 6 位 1 转换为 0，其他位不变即可。由此得出，这一次进行位运算的基本条件必须保证第二个操作数的第 6 位为 0，而其他位该是 1 的是 1，该是 0 的是 0。</p>
+<p>那么如何做到这一点呢？根据位运算的特点以及上面的分析，我们保证第 6 位不同即可，那么拿 <code>011111</code> 与小写字母的二进制数值进行<strong>按位与</strong>运算运算即可。而对 32 进行<strong>按位非</strong>运算的结果刚好为 <code>011111</code>。</p>
+<p><strong>以小写字母 <code>a</code> 为例</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">1</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>这里不一定必须是 <code>011111</code>。比如拿一个完整的 32 位 <code>11111111111111111111111111011111</code> 也可以。但是在上述环境中，<code>011111</code> 就能满足需求，而这个二进制数值对应的数值刚好是对 32 进行<strong>按位非</strong>的运算结果。</p>
+</blockquote>
+<p>根据前面的分析，这样就拿到了大写字母 A 对应的二进制数值，再对它编码便可以返回最终的大写字母。</p>
+<p>至此，对 AngularJS 中这两段代码的分析就完成了。也算是对 JavaScript 中的位运算做了一次巩固，温习。</p>
+<p>其实 JavaScript 中的位运算远远不止这一点，我们还可以使用其他位运算符做到很多事情。下面是一些例子，不妨分析一下其运算原理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取 0-max 之间随机整数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params">max</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Math</span>.random() * max | <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// 获取 1-max 之间的随机整数</span></span><br><span class="line">  <span class="comment">// return Math.random() * max | 1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 奇偶判断</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isOdd</span>(<span class="params">number</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="built_in">parseInt</span>(number) &amp; <span class="number">1</span>) === <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isEven</span>(<span class="params">number</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="built_in">parseInt</span>(number) &amp; <span class="number">1</span>) === <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 取整</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">int</span>(<span class="params">number</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> number | <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 取半</span></span><br><span class="line">number &gt;&gt; <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 2x</span></span><br><span class="line">number &lt;&lt; <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 随机颜色</span></span><br><span class="line"><span class="string">'#'</span>+ (<span class="string">'000000'</span> + (<span class="built_in">Math</span>.random()*<span class="number">0xFFFFFF</span>&lt;&lt;<span class="number">0</span>).toString(<span class="number">16</span>)).slice(<span class="number">-6</span>);</span><br><span class="line"><span class="comment">// 还可以挖掘更多的技巧....</span></span><br></pre></td></tr></table></figure>
+<p>一些本文中用到的代码片段：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取字符 Unicode 编码值</span></span><br><span class="line">str.charCodeAt(<span class="number">0</span>);</span><br><span class="line"><span class="comment">// 获取字符二进制数值有效位</span></span><br><span class="line">str.charCodeAt(<span class="number">0</span>).toString(<span class="number">2</span>);</span><br><span class="line"><span class="comment">// 解析二进制数值</span></span><br><span class="line"><span class="built_in">parseInt</span>(binaryNumber, <span class="number">2</span>);</span><br><span class="line"><span class="comment">// 解析 Unicode 数值位对应的字符</span></span><br><span class="line"><span class="built_in">String</span>.fromCharCode(unicodeNumber);</span><br></pre></td></tr></table></figure>
+<p>写在最后，虽然代码很小，但是其中学问还是蛮大的，仔细分析一下感觉收获很多。在这里尤其感谢我的导师 <a href="http://www.toobug.net" target="_blank" rel="external">@toobug</a> 不厌其烦的在 KFC 给我讲解了很多基础知识。</p>
+<p><strong>参考资料</strong>：</p>
+<ul>
+<li><a href="http://www.w3school.com.cn/js/pro_js_operators_bitwise.asp" target="_blank" rel="external">ECMAScript 位运算</a></li>
+<li><a href="http://www.ituring.com.cn/book/946" target="_blank" rel="external">JavaScript 高级程序设计(第三版) 3.5.2 位操作符</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators" target="_blank" rel="external">MDN - 位运算符</a></li>
+</ul>
+</div></article></div></section><footer><div class="paginator"></div><div class="copyright"><p>© 2015 - 2016 <a href="http://www.basecss.net">basecss</a>, unless otherwise noted.</p></div></footer><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
