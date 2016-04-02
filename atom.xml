@@ -299,9 +299,10 @@
     <link href="http://www.basecss.net/2013/07/09/opacity/"/>
     <id>http://www.basecss.net/2013/07/09/opacity/</id>
     <published>2013-07-08T23:30:06.000Z</published>
-    <updated>2016-04-02T08:48:33.000Z</updated>
+    <updated>2016-04-02T09:12:30.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;opacity-属性&quot;&gt;&lt;a href=&quot;#opacity-属性&quot; class=&quot;headerlink&quot; title=&quot;opacity 属性&quot;&gt;&lt;/a&gt;opacity 属性&lt;/h2&gt;&lt;p&gt;CSS 中的 &lt;code&gt;opacity&lt;/code&gt; 属性用于给元素指定一个 0 (全透明) 至1 (不透明) 的透明度值，但是这个值会应用到覆盖在背景之上的元素。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h5 id=&quot;兼容性如下&quot;&gt;&lt;a href=&quot;#兼容性如下&quot; class=&quot;headerlink&quot; title=&quot;兼容性如下:&quot;&gt;&lt;/a&gt;兼容性如下:&lt;/h5&gt;&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -322,7 +323,6 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;IE中的半透明&quot;&gt;&lt;a href=&quot;#IE中的半透明&quot; class=&quot;headerlink&quot; title=&quot;IE中的半透明&quot;&gt;&lt;/a&gt;IE中的半透明&lt;/h2&gt;&lt;p&gt;在 IE8 及早期版本的 IE 中，需要使用 IE 系私有的 filter 属性处理，其中分别有三种方式:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;filter: alpha(opacity=value);&lt;/code&gt; &lt;sup&gt;[1]&lt;/sup&gt;&lt;/li&gt;
@@ -377,26 +377,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;opacity-属性&quot;&gt;&lt;a href=&quot;#opacity-属性&quot; class=&quot;headerlink&quot; title=&quot;opacity 属性&quot;&gt;&lt;/a&gt;opacity 属性&lt;/h2&gt;&lt;p&gt;CSS 中的 &lt;code&gt;opacity&lt;/code&gt; 属性用于给元素指定一个 0 (全透明) 至1 (不透明) 的透明度值，但是这个值会应用到覆盖在背景之上的元素。&lt;/p&gt;
-&lt;h5 id=&quot;兼容性如下&quot;&gt;&lt;a href=&quot;#兼容性如下&quot; class=&quot;headerlink&quot; title=&quot;兼容性如下:&quot;&gt;&lt;/a&gt;兼容性如下:&lt;/h5&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;Chrome&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;FireFox&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;Internet Explorer&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;Opera&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;Safari&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;1.0&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;1.0&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;9.0&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;9.0&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;1.2&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
     
     </summary>
     
