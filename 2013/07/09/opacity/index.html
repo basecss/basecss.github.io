@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> CSS半透明总结 · basecss.net</title><meta name="description" content="CSS半透明总结 - basecss"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/logo.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="https://github.com/basecss" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">订阅</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">关于</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">CSS半透明总结</h1><div class="post-time">Jul 9, 2013</div><div class="post-content"><h2 id="opacity-属性"><a href="#opacity-属性" class="headerlink" title="opacity 属性"></a>opacity 属性</h2><p>CSS 中的 <code>opacity</code> 属性用于给元素指定一个 0 (全透明) 至1 (不透明) 的透明度值，但是这个值会应用到覆盖在背景之上的元素。</p>
+<h5 id="兼容性如下"><a href="#兼容性如下" class="headerlink" title="兼容性如下:"></a>兼容性如下:</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">Chrome</th>
+<th style="text-align:center">FireFox</th>
+<th style="text-align:center">Internet Explorer</th>
+<th style="text-align:center">Opera</th>
+<th style="text-align:center">Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">9.0</td>
+<td style="text-align:center">9.0</td>
+<td style="text-align:center">1.2</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="IE中的半透明"><a href="#IE中的半透明" class="headerlink" title="IE中的半透明"></a>IE中的半透明</h2><p>在 IE8 及早期版本的 IE 中，需要使用 IE 系私有的 filter 属性处理，其中分别有三种方式:</p>
+<ul>
+<li><code>filter: alpha(opacity=value);</code> <sup>[1]</sup></li>
+<li><code>filter: &quot;alpha(opacity=value)&quot;;</code> <sup>[2]</sup></li>
+<li><code>-ms-filter:&quot;progid:DXImageTransform.Microsoft.Alpha(Opacity=50)&quot;;</code> <sup>[3]</sup></li>
+<li><code>filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);</code></li>
+</ul>
+<p>[1] 直到 IE9 才支持 <code>opacity</code> 属性，但是在之前的版本中都使用支持 <code>filter</code> 替代，并且在IE中使用 <code>filter</code> 属性实现透明的元素需要触发 hasLayout 使其具备 layout 特性。</p>
+<p>[2] <strong><strong style="color:red;">据说</strong></strong>在 IE8 标准模式中，<code>filter</code> 属性的值需要使用引号包裹起来。</p>
+<p>[3] IE4-IE9 中支持的一种扩展形式的编写方式。</p>
+<p>[4] IE 中介绍了 <code>-ms-filter</code>，实质上只是 <code>filter</code> 属性的一个代名词。在 IE10 中不再存在。</p>
+<h2 id="前缀"><a href="#前缀" class="headerlink" title="前缀"></a>前缀</h2><p>FireFox 0.9 之前使用 <code>-moz-opacity</code> 实现，之后便重命名为 <code>opacity</code>。 但之后 <code>-moz-opacity</code> 一直都作为 <code>opacity</code> 的别名存在。但是 FireFox 3.5 之后不再支持 <code>-moz-opacity</code> 属性，此时也移除了在 JavaScript 中支持的 <code>MozOpacity</code> 属性。<strong>据说</strong>在 FireFox 早期版本中 <code>opacity</code> 属性的实现取决于其 Gecko 的版本。</p>
+<p>在早期发布的 Safari 1.2 中支持 <code>-khtml-opacity</code> 的方式实现半透明。</p>
+<p>Konqueror 从不支持 <code>-khtml-opacity</code> 的形式，而是从 4.0 开始便支持 <code>opacity</code>。</p>
+<h5 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h5><p>在实际应用中，由于 <code>opacity</code>/<code>filter</code> 的透明度会应用于子元素，因而常见的的做法是使用两个毗邻的元素，一个用于处理背景层，一个用于处理前景的内容层。其中背景层的要层叠在内容层底部，使用定位的方式便可以实现。示例：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bg</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#000</span>;</span><br><span class="line">    <span class="attribute">-ms-filter</span>:<span class="string">"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"</span>;</span><br><span class="line">    <span class="attribute">filter</span>: <span class="built_in">alpha</span>(opacity=50);</span><br><span class="line">    <span class="attribute">-moz-opacity</span>: .<span class="number">5</span>;</span><br><span class="line">    <span class="attribute">-khtml-opacity</span>: .<span class="number">5</span>;</span><br><span class="line">    <span class="attribute">opacity</span>: .<span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">10</span>; <span class="comment">/* 处理层叠 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span>内容<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bg"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="RGBA"><a href="#RGBA" class="headerlink" title="RGBA"></a>RGBA</h2><p>CSS 2.1 中开始支持 RGB 色彩值，CSS3 中为 RGB 色彩添加了 Alpha 通道。可以用于处理 alpha 渲染和 alpha 合成[据说 alpha 与 RGBA 是有故事的]。RGBA 允许将元素设置为透明，但不影响子元素。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.selector</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">rgba</span>(0，200，200，.5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="RGBA兼容性"><a href="#RGBA兼容性" class="headerlink" title="RGBA兼容性"></a>RGBA兼容性</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">Chrome</th>
+<th style="text-align:center">FireFox</th>
+<th style="text-align:center">Internet Explorer</th>
+<th style="text-align:center">Opera</th>
+<th style="text-align:center">Safari</th>
+<th style="text-align:center">iOS(Safari)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">All</td>
+<td style="text-align:center">3.0</td>
+<td style="text-align:center">9.0</td>
+<td style="text-align:center">10.x+</td>
+<td style="text-align:center">3.x+</td>
+<td style="text-align:center">All</td>
+</tr>
+</tbody>
+</table>
+<h5 id="IE中的RGBA"><a href="#IE中的RGBA" class="headerlink" title="IE中的RGBA"></a>IE中的RGBA</h5><p>IE9 之前的 IE 版本不支持 RGBA，可以使用一个私有的 CSS 滤镜实现 RGBA 的效果。[IE 中的  : ARGB 啦] 示例代码:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.selector</span> &#123;</span><br><span class="line">    <span class="attribute">filter</span>: progid:DXImageTransform.Microsoft.<span class="built_in">gradient</span>(startColorstr=#FFFFFFFF,endColorstr=#FFFFFFFF);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>DXImageTransform.Microsoft.gradient 滤镜中的 startColorstr 参数值是 #AARRGGBB 形式的，其中 AA 便是代表不透明度 (Alpha 通道值) 的十六进制表示，其中 00 表示全透明，FF 表示完全不透明，转化为十进制便是 0~255 范围之间的值，剩下的六位便是 RRGGBB 颜色的十六进制代码。</p>
+<p>Alpha计算方式: <code>x = value*255/10</code> -&gt; 再转换为十六进制。</p>
+<h5 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h5><p>RGBA 可应用于 background，border 属性中，在早期版本的 FireFox 中 border 的拐角处的 rgba 会叠加。[测试在 FireFox17 中不再出现叠加的现象]。</p>
+<p>在 IE9 中，已经支持 RGBA 形式，但是同时也支持 filter 形式。因此需要使用 hack 的方式清除 filter 形式。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> <span class="selector-class">.selector</span> &#123;</span><br><span class="line">    <span class="attribute">filter</span>: none\<span class="number">9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="转换函数"><a href="#转换函数" class="headerlink" title="转换函数"></a>转换函数</h5><p>这里提供一个 RGBA 值转换为 ARGB 的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * @param Number 转换为十六进制的值</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toHex</span> (<span class="params">val</span>)</span>&#123;</span><br><span class="line">    val = <span class="built_in">parseInt</span>(val)</span><br><span class="line">    val = <span class="built_in">Math</span>.max(<span class="number">0</span>，val)</span><br><span class="line">    val = <span class="built_in">Math</span>.min(val，<span class="number">255</span>)</span><br><span class="line">    val = <span class="built_in">Math</span>.round(val)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'0123456789ABCDEF'</span>.charAt((val - val % <span class="number">16</span>) / <span class="number">16</span>) + <span class="string">'0123456789ABCDEF'</span>.charAt(val % <span class="number">16</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line"> * @param String 字符串形式的 rgba 值</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toArgb</span> (<span class="params">val</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> valArr = val.split(<span class="string">"("</span>)[<span class="number">1</span>].split(<span class="string">")"</span>)[<span class="number">0</span>].split(<span class="string">","</span>),</span><br><span class="line">        red = toHex(valArr[<span class="number">0</span>]),</span><br><span class="line">        green = toHex(valArr[<span class="number">1</span>]),</span><br><span class="line">        blue = toHex(valArr[<span class="number">2</span>]),</span><br><span class="line">        alpha = toHex(valArr[<span class="number">3</span>] * <span class="number">255</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'#'</span>+ alpha + red + green + blue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></article></div></section><footer><div class="paginator"><a href="/2013/12/27/classlist/" class="prev">PREV</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://www.basecss.net">basecss</a>, unless otherwise noted.</p></div></footer></body></html>

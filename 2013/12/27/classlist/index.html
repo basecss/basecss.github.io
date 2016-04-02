@@ -1,0 +1,88 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> classList 笔记 · basecss.net</title><meta name="description" content="classList 笔记 - basecss"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/logo.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">首页</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="https://github.com/basecss" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">订阅</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">关于</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">classList 笔记</h1><div class="post-time">Dec 27, 2013</div><div class="post-content"><p>HTML5 中新增了一个 <code>classList</code> API，顾命思议使用它能够获取一个 html 元素的 class 列表，并且能够使用 JavaScript 来管理这个 class 列表。比如：增删改。</p>
+<p>使用 <code>classList</code> 非常方便，在此之前操作元素的 class 可谓相当头疼。</p>
+<a id="more"></a>
+<h3 id="获取-classList"><a href="#获取-classList" class="headerlink" title="获取 classList"></a>获取 <code>classList</code></h3><p>获取一个元素的 <code>classList</code> 非常容易，通过元素的 <code>classList</code> 属性就能简单的获取到元素的 class 列表。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"dom"</span> <span class="attr">class</span>=<span class="string">"classA classB classC"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>获取元素的 <code>classList</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dom = <span class="built_in">document</span>.getElementById(<span class="string">'dom'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> domClassList = dom.classList</span><br><span class="line"><span class="built_in">console</span>.log(domClassList)</span><br></pre></td></tr></table></figure>
+<p>在浏览器中，元素的 <code>classList</code> 属性会返回一个 <code>DOMTokenList</code> 对象，这个对象包含了该元素的 class 列表，以及代表列表长度的 <code>length</code> 属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="number">0</span>: <span class="string">'classA'</span>,</span><br><span class="line">    <span class="number">1</span>: <span class="string">'classB'</span>,</span><br><span class="line">    <span class="number">2</span>: <span class="string">'classC'</span>,</span><br><span class="line">    length: <span class="number">3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>W3C 规范中并没有 <code>classList</code> 对应的规范，仅仅是在 <a href="http://www.w3.org/TR/dom/#dom-element-classlist" target="_blank" rel="external">DOM4规范中提及</a>, DOM4 规范中规定 <code>classList</code> 属性返回一个关联的 <code>DOMTokenList</code> 对象，这个对象就代表着相关对象的 classes [class列表]。</p>
+<ul>
+<li><a href="http://www.w3.org/TR/dom/#domtokenlist" target="_blank" rel="external">DOMTokenList</a></li>
+</ul>
+<blockquote>
+<p>如果要查看 <code>classList</code> 所属类型，应该使用 <code>element.classList instanceof DOMTokenList</code> 的方式，而 <code>typeof element.classList</code> 会返回 ‘object’。</p>
+</blockquote>
+<h3 id="操作class列表"><a href="#操作class列表" class="headerlink" title="操作class列表"></a>操作class列表</h3><p>DOMTokenList 规范提供了一系列可以用于 <code>classList</code> 属性的属性和方法，包括：</p>
+<ul>
+<li><code>add()</code> 用于给 class 列表中添加一个或多个 class [CSS 类]</li>
+<li><code>remove()</code> 从现有的列表中删除一个或者多个 class</li>
+<li><code>contains()</code> 检查给定的 class 是否在列表中，返回布尔值</li>
+<li><code>toggle()</code> 切换列表中的某个 class</li>
+<li><code>item()</code> 获取列表中指定索引的 class。<em>与获取数组元素的方式相同</em></li>
+<li><code>toString()</code> 将列表转换为一个字符串</li>
+<li><code>length</code> 获取列表中 class 个数总数</li>
+<li><code>value</code> 给 classList 对象添加一个自定的属性或者方法</li>
+</ul>
+<h5 id="classList-add"><a href="#classList-add" class="headerlink" title="classList.add()"></a>classList.add()</h5><p>使用 <code>classList.add()</code> 给指定元素添加 class 非常简单，只需要将需要添加的 class 以字符串的形式传递给 <code>add()</code> 方法即可。多个 class 之间使用逗号 <code>,</code> 分割。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dom.classList.add(<span class="string">'classD'</span>)</span><br><span class="line">dom.classList.add(<span class="string">'classE'</span>, <span class="string">'classF'</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>dom.classList.add(&#39;a,b,c,d,e&#39;)</code> 的方式实际上也是合法的，但是这个逗号分割的字符串会作为一个 class 添加给 <code>dom.classList</code>。</p>
+</blockquote>
+<h5 id="classList-remove"><a href="#classList-remove" class="headerlink" title="classList.remove()"></a>classList.remove()</h5><p>与添加 class 一样简单，只需指定需要移除的 class 即可，多个 class 之间使用逗号分割。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dom.classList.remove(<span class="string">'classA'</span>, <span class="string">'classB'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>关于添加和移除多个 class</strong></p>
+<p>DOM4 规范中规定：</p>
+<ul>
+<li><a href="http://dom.spec.whatwg.org/#dom-domtokenlist-add" target="_blank" rel="external">dom-domtokenlist-add/remove</a><ul>
+<li>如果参数为空，抛出语法错误异常</li>
+<li>如果参数字符串包含任意的ASCII空格，抛出InvalidCharacterError异常</li>
+<li>如果给定的参数 class 在现有的列表中不存在就添加</li>
+<li>合法的操作都会触发 DOMTokenList 更新操作</li>
+</ul>
+</li>
+<li>对于移除操作，如果参数在列表中存在就移除，否则什么都不干。</li>
+</ul>
+<p>对于浏览器不支持使用空格分割的形式同时添加或移除多个 class，但是使用现有的方法很容易扩展。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!DOMTokenList.prototype.addmore) &#123;</span><br><span class="line">    DOMTokenList.prototype.addmore = <span class="function"><span class="keyword">function</span> (<span class="params">classes</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> classes = classes.split(<span class="string">' '</span>),</span><br><span class="line">            i = <span class="number">0</span>,</span><br><span class="line">            classesLen = classes.length</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">for</span> (i, i &lt; classesLen; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (classes[i].trim()) &#123;</span><br><span class="line">                <span class="keyword">this</span>.add(classes[i])</span><br><span class="line">                <span class="comment">// remove</span></span><br><span class="line">                <span class="comment">// this.remove(classes[i])</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用现有的方式也很容易扩展更多的操作 classList 的方法，比如：以数组的形式添加/删除多个 class，处理使用逗号分割的连续字符串 (<code>a,b,c</code>) 等等。</p>
+<h5 id="classList-contains"><a href="#classList-contains" class="headerlink" title="classList.contains()"></a>classList.contains()</h5><p>这个方法会根据检查结果返回 <code>true</code> 和 <code>false</code>。如果列表中存在给定的参数，则返回 <code>true</code>，反之，返回 <code>false</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dom.classList.contains(<span class="string">'classD'</span>)</span><br><span class="line">dom.classList.contains(<span class="string">'classD'</span>,<span class="string">'classE'</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>多个之间也可以使用逗号分割的字符串列表。对于依赖于指定的 class 是否存在于列表的后续操作，<code>contains()</code> 是非常有用的。</p>
+</blockquote>
+<h5 id="classList-toggle"><a href="#classList-toggle" class="headerlink" title="classList.toggle()"></a>classList.toggle()</h5><p><code>classList.toggle()</code> 也很简单。通常情况下我们会通过程序的方式或者用户触发某个函数来添加或移除列表中 class。使用 <code>toggle()</code> 方法可以很容易做到。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dom.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    dom.classList.toggle(<span class="string">'classE'</span>)</span><br><span class="line">&#125;, <span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>toggle()</code> 方法会返回 Boolean 值，当将指定类移除时返回 <code>false</code>, 反之返回 <code>true</code>。</p>
+</blockquote>
+<p><code>classList</code> 的 <code>toggle()</code> 方法还有可选的第二个参数。如果第二个参数设置为 <code>true</code>，那么就会将参数 class 添加到元素中，而不是移除，反之设置 <code>false</code> 删除指定的 class 。</p>
+<blockquote>
+<p>PS: 第二参数的支持取决于浏览器，实际上加不加是一样的。不支持第二参数的浏览器会忽略它。</p>
+</blockquote>
+<h5 id="classList-item"><a href="#classList-item" class="headerlink" title="classList.item()"></a>classList.item()</h5><p>NodeList中也有 <code>item()</code> 方法。 <code>classList</code> 的 <code>item()</code> 方法返回列表指定索引的 class （索引从 <code>0</code> 开始）。假设有如下代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"domP"</span> <span class="attr">class</span>=<span class="string">"a b c d e f"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>获取指定索引的 class：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="built_in">document</span>.getElementById(<span class="string">'domP'</span>)</span><br><span class="line"></span><br><span class="line">p.classList.item(<span class="number">0</span>) <span class="comment">// 'a'</span></span><br><span class="line">p.classList.item(<span class="number">4</span>) <span class="comment">// 'e'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>classList</code> 的 <code>item()</code> 方法不能用来做添加或删除操作，会报错。</p>
+</blockquote>
+<h5 id="classList-toString"><a href="#classList-toString" class="headerlink" title="classList.toString()"></a>classList.toString()</h5><p>这个方法将指定元素的 class 列表转换为一个字符串。</p>
+<blockquote>
+<p><code>toString()</code> 并不是 DOMTokenList 规范中特有的。</p>
+</blockquote>
+<h5 id="classList-length"><a href="#classList-length" class="headerlink" title="classList.length"></a>classList.length</h5><p>返回指定元素 class 列表长度。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p.classList.length <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+<h5 id="classList-value"><a href="#classList-value" class="headerlink" title="classList.value"></a>classList.value</h5><p>由于 classList 就是一个对象，因此我们可以给他添加属性和方法，就像操作一般的对象一样。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">classList.someProperty = <span class="string">'xxx'</span></span><br><span class="line">classList.someMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="低版本兼容-classList-polyfill"><a href="#低版本兼容-classList-polyfill" class="headerlink" title="低版本兼容(classList polyfill)"></a>低版本兼容(classList polyfill)</h3><p>提到 DOM 操作，兼容性就是个头疼的问题。尤其是 classList 这类非常好用的 API。 IE 到 10.0 才支持它，因此我们可以使用一些扩展的脚本程序来兼容不支持 classList 的浏览器。</p>
+<ul>
+<li><a href="http://caniuse.com/#search=classlist" target="_blank" rel="external">classList兼容性查看</a></li>
+<li><a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills#classlist" target="_blank" rel="external">Modernizr推荐的一些polyfill脚本</a></li>
+<li><a href="https://gist.github.com/devongovett/1381839" target="_blank" rel="external">gist</a></li>
+<li><a href="https://github.com/eligrey/classList.js" target="_blank" rel="external">classList.js - 兼容IE8+</a></li>
+<li><a href="https://gist.github.com/termi/3952026" target="_blank" rel="external">gits2</a></li>
+</ul>
+<p>可以使用如下方式来检测浏览器是否支持 <code>classList</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="string">'classList'</span> <span class="keyword">in</span> <span class="built_in">document</span>.createElement(<span class="string">'div'</span>)) &#123;</span><br><span class="line">    <span class="comment">// 使用 classList</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></article></div></section><footer><div class="paginator"><a href="/2014/03/27/code-learning/" class="prev">PREV</a><a href="/2013/07/09/opacity/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://www.basecss.net">basecss</a>, unless otherwise noted.</p></div></footer></body></html>
