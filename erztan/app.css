@@ -1030,6 +1030,9 @@ button.swiper-pagination-bullet {
 .music {
   display: none;
 }
+.hide {
+  display: none;
+}
 .next-page {
   position: absolute;
   right: 20px;
@@ -1064,12 +1067,15 @@ button.swiper-pagination-bullet {
   left: 50%;
   width: 184px;
   height: 203px;
+  opacity: 0;
   background-image: url(http://www.basecss.net/erztan/assets/xi.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom center;
   -webkit-transform: translate3d(-50%, -50%, 0);
           transform: translate3d(-50%, -50%, 0);
+  -webkit-animation: fadeIn 1s ease-in-out 0.5s both 1;
+          animation: fadeIn 1s ease-in-out 0.5s both 1;
 }
 .page1 .happiness-container .xi .eye {
   position: absolute;
@@ -1112,6 +1118,34 @@ button.swiper-pagination-bullet {
 .page1 .happiness-container .xi .eye4 {
   bottom: 52px;
   right: 25px;
+}
+.page1 .happiness-container .loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+}
+.page1 .happiness-container .loading .icon {
+  height: 29px;
+  margin-bottom: 14px;
+}
+.page1 .happiness-container .loading .heart {
+  display: block;
+  width: 34px;
+  height: 29px;
+  margin: auto;
+  background-image: url(http://www.basecss.net/erztan/assets/loading.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-animation: pulse 2s ease-in-out infinite alternate;
+          animation: pulse 2s ease-in-out infinite alternate;
+}
+.page1 .happiness-container .loading .progress {
+  line-height: 30px;
+  font-size: 14px;
+  text-align: center;
 }
 .page1 .texture {
   position: absolute;
@@ -1540,6 +1574,34 @@ button.swiper-pagination-bullet {
   }
   to {
     bottom: 25px;
+  }
+}
+@-webkit-keyframes pulse {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes pulse {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
   }
 }
 @-webkit-keyframes fadeIn {
